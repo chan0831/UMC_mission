@@ -42,7 +42,7 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-    @Column(nullable = false, length = 40)
+    @Column(length = 40)
     private String specAddress;
 
     @ColumnDefault("0")
