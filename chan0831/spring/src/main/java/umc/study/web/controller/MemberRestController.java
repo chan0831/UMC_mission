@@ -2,10 +2,7 @@ package umc.study.web.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import umc.study.apiPayload.ApiResponse;
 import umc.study.converter.MemberConverter;
 import umc.study.domain.Member;
@@ -21,8 +18,9 @@ public class MemberRestController {
     private final MemberCommandService memberCommandService;
 
     @PostMapping("/")
-    public ApiResponse<MemberResponseDTO.JoinResultDTO> join(@RequestParam @Valid MemberRequestDTO.JoinDto request){
+    public ApiResponse<MemberResponseDTO.JoinResultDTO> join(@RequestBody @Valid MemberRequestDTO.JoinDto request){
         Member member = memberCommandService.joinMember(request);
+
         return ApiResponse.onSuccess(MemberConverter.toJoinResultDTO(member));
 
     }
