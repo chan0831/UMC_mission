@@ -2,6 +2,9 @@ package umc.study.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.study.domain.common.BaseEntity;
 import umc.study.domain.enums.Gender;
 import umc.study.domain.enums.MemberStatus;
@@ -16,6 +19,8 @@ import java.util.List;
 
 
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,7 +34,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(nullable = false, length = 50)
+    //@Column(nullable = false, length = 50)
     private String email;
 
     @Column(nullable = false, length = 40)
@@ -40,6 +45,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 40)
     private String specAddress;
 
+    @ColumnDefault("0")
     private Integer point;
 
     @Enumerated(EnumType.STRING)
