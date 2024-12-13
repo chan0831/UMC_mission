@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import umc.study.validation.annotation.ExistStore;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class ReviewRequestDTO {
 
     @Getter
@@ -26,6 +29,8 @@ public class ReviewRequestDTO {
         @ExistStore
         private Long storeId; // 어느 가게에 추가할지
     }
+
+
 }
 
 
