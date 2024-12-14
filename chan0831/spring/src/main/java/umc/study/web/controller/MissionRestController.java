@@ -2,10 +2,7 @@ package umc.study.web.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import umc.study.apiPayload.ApiResponse;
 import umc.study.converter.MissionConverter;
 import umc.study.domain.mapping.MemberMission;
@@ -21,11 +18,21 @@ public class MissionRestController {
 
     private final MissionCommandService missionCommandService;
 
-    @PostMapping("/startMission")
+    @PostMapping("/{storeId}/mission/{missionId}")
     public ApiResponse<MissionResponseDTO.MissionChallengeResultDTO> startMission
-            (@RequestBody @Valid MissionReqeustDTO.MissionChallengeDTO request){
+            (@RequestBody @Valid MissionReqeustDTO.MissionChallengeDTO request,
+             @PathVariable("storeId") Long storeId,
+             @PathVariable("missionId") Long missionId){
         MemberMission memberMission = missionCommandService.CheckMissionChallenge(request);
         return ApiResponse.onSuccess(MissionConverter.toMissionResultDTO(memberMission) );
 
     }
+
+    //특정가게 미션 조회
+    @GetMapping("/{storeId}/missions")
+    public ApiResponse<>
+
+    //특정 가게에 미션 추가?
+    //@PostMapping("/{storeId}/missions") {}
+
 }

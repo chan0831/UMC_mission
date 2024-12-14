@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import umc.study.domain.enums.MissionStatus;
 
+import java.time.LocalDate;
+
 public class MissionResponseDTO {
     @Getter
     @Builder
