@@ -7,12 +7,19 @@ import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.apiPayload.exception.handler.FoodCategoryHandler;
 import umc.study.converter.MemberConverter;
 import umc.study.converter.MemberPreferConverter;
+import umc.study.converter.MissionConverter;
 import umc.study.domain.FoodCategory;
 import umc.study.domain.Member;
+import umc.study.domain.Mission;
+import umc.study.domain.enums.MissionStatus;
+import umc.study.domain.mapping.MemberMission;
 import umc.study.domain.mapping.MemberPrefer;
 import umc.study.repository.FoodCategoryRepository;
+import umc.study.repository.memberRepository.MemberMissionRepository;
 import umc.study.repository.memberRepository.MemberRepository;
 import umc.study.web.dto.MemberRequestDTO;
+import umc.study.web.dto.MemberResponseDTO;
+import umc.study.web.dto.MissionResponseDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +31,7 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     private final MemberRepository memberRepository;
 
     private final FoodCategoryRepository foodCategoryRepository ;
+    private final MemberMissionRepository memberMissionRepository;
 
     @Override
     @Transactional
@@ -41,4 +49,18 @@ public class MemberCommandServiceImpl implements MemberCommandService {
 
         return memberRepository.save(newMember);
     }
+
+    @Override
+    public MemberResponseDTO.CompleteMissionResultDTO completeMission(Long memberId, Long missionId) {
+
+        MemberMission memberMission = memberMissionRepository.findByMemberIdAndMissionIdAndStatus(memberId, missionId, MissionStatus.CHALLENGING);
+
+        memberMission.updateStatus(MissionStatus.COMPLETE);
+
+        Mission mission = memberMission.getMission();
+
+        return MissionConverter.completeMissionResultDTO(mission, memberMission);
+    }
+
+
 }

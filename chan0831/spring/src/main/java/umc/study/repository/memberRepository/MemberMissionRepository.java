@@ -16,4 +16,5 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
 
     Page<MemberMission> findAllByMemberAndStatus(Member member, MissionStatus status, PageRequest request);
 
+    MemberMission findByMemberIdAndMissionIdAndStatus(Long memberId, Long missionId, MissionStatus missionStatus);
 }

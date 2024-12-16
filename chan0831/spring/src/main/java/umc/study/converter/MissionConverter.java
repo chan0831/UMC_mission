@@ -5,6 +5,8 @@ import umc.study.domain.Member;
 import umc.study.domain.Mission;
 import umc.study.domain.enums.MissionStatus;
 import umc.study.domain.mapping.MemberMission;
+import umc.study.web.dto.MemberRequestDTO;
+import umc.study.web.dto.MemberResponseDTO;
 import umc.study.web.dto.MissionReqeustDTO;
 import umc.study.web.dto.MissionResponseDTO;
 
@@ -51,6 +53,15 @@ public class MissionConverter {
                 .totalPage(missionList.getTotalPages())
                 .listSize(storeMissionDTOList.size())
                 .missionList(storeMissionDTOList)
+                .build();
+    }
+
+    public static MemberResponseDTO.CompleteMissionResultDTO completeMissionResultDTO(Mission mission, MemberMission memberMission){
+
+        return MemberResponseDTO.CompleteMissionResultDTO.builder()
+                .missionSpec(mission.getMissionSpec())
+                .reward(mission.getReward())
+                .status(memberMission.getStatus())
                 .build();
     }
 }

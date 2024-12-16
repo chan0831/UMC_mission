@@ -47,4 +47,15 @@ public class MemberResponseDTO {
         Boolean isFirst;
         Boolean isLast;
     }
+
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    public static class CompleteMissionResultDTO{
+
+        Integer reward;
+        String missionSpec;
+        MissionStatus status;
+    }
 }

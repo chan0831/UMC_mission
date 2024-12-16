@@ -22,4 +22,11 @@ public class MemberRequestDTO {
         List<Long> preferCategory;
 
     }
+
+    @Getter
+    public static class CompleteMissionDTO{
+
+        Long memberId;
+        Long missionId;
+    }
 }
