@@ -14,7 +14,9 @@ import umc.study.apiPayload.ApiResponse;
 import umc.study.converter.MemberConverter;
 import umc.study.converter.ReviewConverter;
 import umc.study.domain.Member;
+import umc.study.domain.Mission;
 import umc.study.domain.Review;
+import umc.study.domain.enums.MissionStatus;
 import umc.study.service.memberService.MemberCommandService;
 import umc.study.service.memberService.MemberQueryService;
 import umc.study.service.memberService.MemberQueryServiceImpl;
@@ -56,5 +58,24 @@ public class MemberRestController {
         int page = pages - 1 ;
         Page<Review> myReviewList = memberQueryService.getMyReviewList(memberId, page);
         return ApiResponse.onSuccess(ReviewConverter.myReviewListDTO(myReviewList));
+    }
+
+    @GetMapping("/{memberId}/missions/{status}")
+    @Operation(summary = "나의 진행중인 미션 목록 조회 API",description = "내 진행중인 미션 목록을 조회하는 API이며, 페이징을 포함합니다. query String 으로 page 번호를 주세요")
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON200",description = "OK, 성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH003", description = "access 토큰을 주세요!",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH004", description = "acess 토큰 만료",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "AUTH006", description = "acess 토큰 모양이 이상함",content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+    })
+    @Parameters({
+            @Parameter(name = "memberId", description = "나의 아이디, path variable 입니다!"),
+            @Parameter(name = "status", description = "미션 상태 path variable .")
+    })
+    public ApiResponse<MemberResponseDTO.MyChallengingMissionListDTO> myMission(@PathVariable(name = "memberId") Long memberId, @PathVariable(name = "status")MissionStatus status, @ExistPage @RequestParam(name = "page") Integer page){
+
+        Page<Mission> myChallengingMissionList = memberQueryService.getMyMissionList(memberId, status, page );
+
+        return ApiResponse.onSuccess(MemberConverter.myChallengingMissionListDTO(myChallengingMissionList));
     }
 }
